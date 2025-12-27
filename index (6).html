@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lời nhắn gửi anh 💚</title>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #1f4037, #99f2c8);
+      margin: 0;
+      padding: 20px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h2 { margin-bottom: 5px; font-size: 24px; }
+
+    /* Trả về kích thước ảnh cũ của bạn */
+    #character {
+      width: 220px; /* Đúng kích thước code cũ */
+      height: auto;
+      margin-top: 15px;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      animation: idle 2s infinite ease-in-out;
+    }
+
+    @keyframes idle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .caption {
+      font-size: 15px;
+      color: #e0ffe6;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 12px 26px;
+      font-size: 17px;
+      cursor: pointer;
+      border-radius: 25px;
+      border: none;
+      background: #ff6f91;
+      color: white;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Khung chứa chữ để cân đối với ảnh */
+    #text-container {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 320px;
+      background: rgba(255, 255, 255, 0.1); /* Nền mờ nhẹ */
+      border-radius: 15px;
+      padding: 15px;
+      min-height: 150px;
+      max-height: 300px; /* Giới hạn chiều cao để không quá dài */
+      overflow-y: auto; /* Nếu chữ quá dài sẽ có thanh cuộn xinh xinh */
+      line-height: 1.6;
+      font-size: 17px;
+      scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+    }
+    
+    #text-container::-webkit-scrollbar { display: none; } /* Ẩn thanh cuộn trên Chrome */
+
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      z-index: 999;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+  
+  <h2 style="font-size: 30px;">💌 你好</h2>
+
+  <img id="character" src="https://uploads.onecompiler.io/448u5pyd6/448u5raz2/9f.jpg" alt="hmmmm">
+
+  <p style="font-size: 16px; color: #e0ffe6; margin-top: 15px;">
+    Gửi đồng chí <b>Nguyễn Văn Phong</b> 💚
+  </p>
+
+  <button id="btn" onclick="start()">iu ấn vào đây nè iu 🫶</button>
+
+  <div id="text-container">
+    <div id="text"></div>
+  </div>
+
+  <audio id="music" src="https://zingmp3.vn/bai-hat/Em-Khong-Duoc-Phep-Buon-Rau-Kis/ZZFC70AI.html"></audio>
+
+  <script>
+    const lines = [
+      "Anh ui! Lii bảo nè...",
+      "Anh không được phép buồn rầu",
+      "Bởi vì em sẽ mang đi hết muộn sầu",
+      "Một ngày hai mươi tư tiếng trôi mau",
+      "Đừng bận tâm đến những nỗi đau",
+      "--------------------",
+      "Anh không được phép lạnh lùng",
+      "Bên cạnh em đã quen giây phút thẹn thùng",
+      "Anh nhìn em bằng đôi mắt long lanh",
+      "Đêm về mang tương tư vây quanh 💚"
+    ];
+
+    let index = 0;
+    let started = false;
+
+    function start() {
+      if (started) return;
+      started = true;
+      document.getElementById("btn").style.opacity = "0.5";
+      document.getElementById("btn").innerText = "Đang gửi lời nhắn...";
+      
+      document.getElementById("music").play();
+      setInterval(createHeart, 400);
+      showLines();
+    }
+
+    function showLines() {
+      if (index < lines.length) {
+        const textBox = document.getElementById("text");
+        const container = document.getElementById("text-container");
+        
+        textBox.innerHTML += lines[index] + "<br>";
+        index++;
+        
+        // Tự động cuộn xuống khi chữ hiện ra
+        container.scrollTop = container.scrollHeight;
+        
+        setTimeout(showLines, 1500); 
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "💚";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+  </script>
+
+</body>
+</html>
