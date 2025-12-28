@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trò chơi chọn đáp án</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fef6f6;
+            text-align: center;
+            padding-top: 50px;
+            overflow: hidden;
+        }
+
+        /* Vùng chứa sticker */
+        #sticker-container {
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #sticker {
+            width: 150px;
+            /* Sticker hiện sẵn một cái cho cute */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #ff4d6d;
+            font-size: 24px;
+        }
+
+        .btn-group {
+            position: relative;
+            height: 100px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        #sai {
+            background-color: #ffb3c1;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #sai:active {
+            transform: scale(0.9);
+        }
+
+        #dung {
+            position: absolute;
+            background-color: #a2d2ff;
+            color: white;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        #message {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #d60000;
+            font-weight: bold;
+            min-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sticker-container">
+        <img id="sticker" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbM2yiuzU92wLz/giphy.gif" alt="cute sticker">
+    </div>
+
+    <h1>❓ Bè ghéc lii đúng hong</h1>
+
+    <div class="btn-group">
+        <button id="sai">đúm rùi</button>
+        <button id="dung">hong có</button>
+    </div>
+
+    <div id="message"></div>
+
+    <script>
+        const dungBtn = document.getElementById("dung");
+        const saiBtn = document.getElementById("sai");
+        const message = document.getElementById("message");
+        const stickerImg = document.getElementById("sticker");
+
+        // Danh sách sticker cute
+        const stickers = [
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3oriO0OEdcRldUXCi4/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/L40pD0XU4Y8v6/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/5GoVLqeAOo6PK/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbM2yiuzU92wLz/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4bmZ4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/C9x0nrDQ749iM/giphy.gif"
+        ];
+
+        // Danh sách câu nói
+        const texts = [
+            "😒 Biết ngay mà!",
+            "🙄 Tui bùn bè quớ ",
+            "😭 Huhuhu sao nỡ lừa tui!",
+            "🤡 Thôi khỏi chối, tui bít hết gòi!",
+            "😏 Ít ra bè còn xíu trung thực đó",
+            "💖 Khai thật đi, ghéc bao lâu rùi?",
+            "🤨 lii dỗi lun nhá!"
+        ];
+
+        // Né chuột khi rê vào nút "Hong có"
+        dungBtn.addEventListener("mouseover", () => {
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+            dungBtn.style.left = x + "px";
+            dungBtn.style.top = y + "px";
+        });
+
+        // Khi bấm "Đúm rùi" - Không giới hạn
+        saiBtn.addEventListener("click", () => {
+            // Đổi sticker ngẫu nhiên
+            const randomSticker = stickers[Math.floor(Math.random() * stickers.length)];
+            stickerImg.src = randomSticker;
+
+            // Đổi chữ ngẫu nhiên
+            const randomText = texts[Math.floor(Math.random() * texts.length)];
+            message.innerText = randomText;
+        });
+    </script>
+
+</body>
+</html>
